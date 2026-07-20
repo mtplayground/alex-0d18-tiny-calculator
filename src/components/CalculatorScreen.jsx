@@ -14,9 +14,9 @@ export function CalculatorScreen() {
   );
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-paper px-5 py-8 text-charcoal">
+    <main className="flex min-h-dvh items-center justify-center bg-paper px-5 py-8 text-charcoal">
       <section
-        className="w-full max-w-sm rounded-shell border border-line bg-surface p-6"
+        className="w-full max-w-sm rounded-shell border border-line bg-surface p-7"
         aria-label="Calculator"
       >
         <CalculatorDisplay value={getDisplayValue(calculatorState)} />
