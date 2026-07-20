@@ -1,0 +1,59 @@
+const keys = [
+  ['AC', 'action'],
+  ['+/-', 'action'],
+  ['%', 'action'],
+  ['÷', 'operator'],
+  ['7', 'number'],
+  ['8', 'number'],
+  ['9', 'number'],
+  ['×', 'operator'],
+  ['4', 'number'],
+  ['5', 'number'],
+  ['6', 'number'],
+  ['−', 'operator'],
+  ['1', 'number'],
+  ['2', 'number'],
+  ['3', 'number'],
+  ['+', 'operator'],
+  ['0', 'number wide'],
+  ['.', 'number'],
+  ['=', 'equals'],
+];
+
+function keyClass(type) {
+  const base =
+    'flex h-14 items-center justify-center rounded-button text-lg font-semibold';
+
+  if (type.includes('operator') || type.includes('equals')) {
+    return `${base} bg-accent text-white`;
+  }
+
+  return `${base} bg-key text-charcoal`;
+}
+
+export function CalculatorShell() {
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-paper px-5 py-8 text-charcoal">
+      <section
+        className="w-full max-w-sm rounded-shell border border-line bg-surface p-6"
+        aria-label="Calculator"
+      >
+        <div className="mb-6 flex min-h-28 items-end justify-end rounded-button border border-line bg-paper px-5 py-4">
+          <span className="text-5xl font-semibold leading-none">0</span>
+        </div>
+
+        <div className="grid grid-cols-4 gap-3">
+          {keys.map(([label, type]) => (
+            <button
+              key={label}
+              className={`${keyClass(type)} ${type.includes('wide') ? 'col-span-2' : ''}`}
+              type="button"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
