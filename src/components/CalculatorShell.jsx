@@ -1,3 +1,10 @@
+import { useReducer } from 'react';
+import {
+  calculatorReducer,
+  getDisplayValue,
+  initialCalculatorState,
+} from '../calculator/state.js';
+
 const keys = [
   ['AC', 'action'],
   ['+/-', 'action'],
@@ -31,7 +38,33 @@ function keyClass(type) {
   return `${base} bg-key text-charcoal`;
 }
 
+function keyAction(label, type) {
+  if (/^[0-9]$/.test(label)) {
+    return { type: 'digit', digit: label };
+  }
+
+  if (label === '.') {
+    return { type: 'decimal' };
+  }
+
+  if (label === 'AC') {
+    return { type: 'clear' };
+  }
+
+  if (type.includes('operator')) {
+    return { type: 'operator', operator: label };
+  }
+
+  return null;
+}
+
 export function CalculatorShell() {
+  const [calculatorState, dispatch] = useReducer(
+    calculatorReducer,
+    initialCalculatorState,
+  );
+  const displayValue = getDisplayValue(calculatorState);
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-paper px-5 py-8 text-charcoal">
       <section
@@ -39,7 +72,9 @@ export function CalculatorShell() {
         aria-label="Calculator"
       >
         <div className="mb-6 flex min-h-28 items-end justify-end rounded-button border border-line bg-paper px-5 py-4">
-          <span className="text-5xl font-semibold leading-none">0</span>
+          <span className="text-5xl font-semibold leading-none">
+            {displayValue}
+          </span>
         </div>
 
         <div className="grid grid-cols-4 gap-3">
@@ -47,6 +82,13 @@ export function CalculatorShell() {
             <button
               key={label}
               className={`${keyClass(type)} ${type.includes('wide') ? 'col-span-2' : ''}`}
+              onClick={() => {
+                const action = keyAction(label, type);
+
+                if (action) {
+                  dispatch(action);
+                }
+              }}
               type="button"
             >
               {label}
