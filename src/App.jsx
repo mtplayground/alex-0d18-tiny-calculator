@@ -1,5 +1,5 @@
-import { CalculatorShell } from './components/CalculatorShell.jsx';
+import { CalculatorScreen } from './components/CalculatorScreen.jsx';
 
 export function App() {
-  return <CalculatorShell />;
+  return <CalculatorScreen />;
 }

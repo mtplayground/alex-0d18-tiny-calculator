@@ -11,12 +11,18 @@ const variantClasses = {
 export function CalculatorButton({
   children,
   onClick,
+  span = 1,
   variant = 'mono',
-  wide = false,
 }) {
+  const spanClass = {
+    1: '',
+    2: 'col-span-2',
+    3: 'col-span-3',
+  }[span];
+
   return (
     <button
-      className={`${baseClasses} ${variantClasses[variant]} ${wide ? 'col-span-2' : ''}`}
+      className={`${baseClasses} ${variantClasses[variant]} ${spanClass}`}
       onClick={onClick}
       type="button"
     >
@@ -28,6 +34,6 @@ export function CalculatorButton({
 CalculatorButton.propTypes = {
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
+  span: PropTypes.oneOf([1, 2, 3]),
   variant: PropTypes.oneOf(['accent', 'mono']),
-  wide: PropTypes.bool,
 };
