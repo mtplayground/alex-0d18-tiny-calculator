@@ -6,7 +6,7 @@ import {
 } from '../calculator/state.js';
 
 const keys = [
-  ['AC', 'action'],
+  ['C', 'action'],
   ['+/-', 'action'],
   ['%', 'action'],
   ['÷', 'operator'],
@@ -47,8 +47,12 @@ function keyAction(label, type) {
     return { type: 'decimal' };
   }
 
-  if (label === 'AC') {
+  if (label === 'C') {
     return { type: 'clear' };
+  }
+
+  if (type.includes('equals')) {
+    return { type: 'equals' };
   }
 
   if (type.includes('operator')) {
