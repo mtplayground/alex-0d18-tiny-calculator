@@ -4,6 +4,8 @@ import {
   getDisplayValue,
   initialCalculatorState,
 } from '../calculator/state.js';
+import { CalculatorButton } from './CalculatorButton.jsx';
+import { CalculatorDisplay } from './CalculatorDisplay.jsx';
 
 const keys = [
   ['C', 'action'],
@@ -27,15 +29,10 @@ const keys = [
   ['=', 'equals'],
 ];
 
-function keyClass(type) {
-  const base =
-    'flex h-14 items-center justify-center rounded-button text-lg font-semibold';
-
-  if (type.includes('operator') || type.includes('equals')) {
-    return `${base} bg-accent text-white`;
-  }
-
-  return `${base} bg-key text-charcoal`;
+function keyVariant(type) {
+  return type.includes('operator') || type.includes('equals')
+    ? 'accent'
+    : 'mono';
 }
 
 function keyAction(label, type) {
@@ -75,17 +72,12 @@ export function CalculatorShell() {
         className="w-full max-w-sm rounded-shell border border-line bg-surface p-6"
         aria-label="Calculator"
       >
-        <div className="mb-6 flex min-h-28 items-end justify-end rounded-button border border-line bg-paper px-5 py-4">
-          <span className="text-5xl font-semibold leading-none">
-            {displayValue}
-          </span>
-        </div>
+        <CalculatorDisplay value={displayValue} />
 
         <div className="grid grid-cols-4 gap-3">
           {keys.map(([label, type]) => (
-            <button
+            <CalculatorButton
               key={label}
-              className={`${keyClass(type)} ${type.includes('wide') ? 'col-span-2' : ''}`}
               onClick={() => {
                 const action = keyAction(label, type);
 
@@ -93,10 +85,11 @@ export function CalculatorShell() {
                   dispatch(action);
                 }
               }}
-              type="button"
+              variant={keyVariant(type)}
+              wide={type.includes('wide')}
             >
               {label}
-            </button>
+            </CalculatorButton>
           ))}
         </div>
       </section>
